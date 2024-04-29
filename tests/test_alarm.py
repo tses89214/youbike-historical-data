@@ -5,7 +5,7 @@ import requests_mock
 from src.alarm import TGBot
 
 
-def test_openai_agent():
+def test_alarm():
     with requests_mock.Mocker() as m:
         os.environ["tg_token"] = "123"
         os.environ["tg_chat_id"] = "123"
