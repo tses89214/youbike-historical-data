@@ -14,7 +14,7 @@ class BQConnector:
     To keep things simple, store and write logic are included in this script.
     """
 
-    def __init__(self, client: bigquery.Client) -> None:
+    def __init__(self, client: bigquery.Client = None) -> None:
         self._client = bigquery.Client() if client is None else client
 
     def check_md5_for_update(self, site_data_md5: str) -> bool:
