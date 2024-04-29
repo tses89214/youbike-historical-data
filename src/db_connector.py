@@ -74,3 +74,45 @@ class BQConnector:
             slots_data, table_id, job_config=job_config
         )
         return job.result()
+
+    def read_sites(self) -> pd.DataFrame:
+        """
+        Read the whole sites table.
+
+        Returns:
+            bool: whether md5 is same.
+        """
+        query = 'SELECT * FROM `ubike-crawler.ubike_data.sites`'
+        query_job = self._client.query(query)
+        return query_job.to_dataframe()
+
+    def read_slots(self) -> pd.DataFrame:
+        """
+        Read the slots table of specific time range.
+
+        Returns:
+            bool: whether md5 is same.
+        """
+        query = """
+            SELECT * FROM `ubike-crawler.ubike_data.slots`
+            WHERE DATE(infoTime) BETWEEN 
+                DATE_SUB(CURRENT_DATE(), INTERVAL 8 DAY) 
+                AND 
+                DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
+        """
+        query_job = self._client.query(query)
+        return query_job.to_dataframe()
+
+    def clean_slots(self):
+        """
+        Clean last week data from slots table.
+        """
+        query = """
+            DELETE FROM `ubike-crawler.ubike_data.slots`
+            WHERE DATE(infoTime) BETWEEN 
+                DATE_SUB(CURRENT_DATE(), INTERVAL 8 DAY) 
+                AND 
+                DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
+        """
+        delete_job = self._client.query(query)
+        delete_job.result()
