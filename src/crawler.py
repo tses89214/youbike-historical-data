@@ -27,8 +27,8 @@ def split_table(records: List[Dict]):
         records: List of Dict. The raw data get from API.
 
     Returns:
-        (Site, Slots):
-            Site table fields:
+        (Sites, Slots):
+            Sites table fields:
                 - sno
                 - sna
                 - tot
@@ -48,8 +48,9 @@ def split_table(records: List[Dict]):
 
     """
     raw_table = pd.DataFrame(records)
-    site = raw_table[['sno', 'sna', 'tot', 'sarea',
+    sites = raw_table[['sno', 'sna', 'tot', 'sarea',
                       'lat', 'lng', 'ar', 'sareaen', 'aren', 'act']]
     slots = raw_table[['sno', 'sbi', 'infoTime']]
+    slots['infoTime'] = pd.to_datetime(slots['infoTime'])
 
-    return site, slots
+    return sites, slots

@@ -31,7 +31,7 @@ class BQConnector:
         query_job = self._client.query(query)
         rows = query_job.result()
         for row in rows:
-            current_md5 = row[0]
+            current_md5 = row['md5']
 
         return current_md5 == site_data_md5
 
@@ -45,7 +45,7 @@ class BQConnector:
         Returns:
             job results.
         """
-        table_id = 'ubike-crawler.ubike_data.site'
+        table_id = 'ubike-crawler.ubike_data.sites'
         job_config = bigquery.LoadJobConfig(
             schema=sites.to_bq_schema(),
             write_disposition='WRITE_TRUNCATE'
