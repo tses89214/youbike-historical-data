@@ -1,0 +1,29 @@
+name: UnitTest
+
+on:
+  push:
+    branches:
+      - "**" # matches every branch
+    tags:
+      - "v**"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+        packages: write
+        contents: read
+        id-token: write
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: python -m pip install --upgrade pip setuptools && python -m pip install -r requirements.txt
+
+      - name: Run test
+        run: pytest
