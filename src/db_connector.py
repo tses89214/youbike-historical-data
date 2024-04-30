@@ -116,7 +116,7 @@ class BQConnector:
             bool: whether md5 is same.
         """
         query = """
-            SELECT * FROM `ubike-crawler.ubike_data.slots`
+            SELECT distinct * FROM `ubike-crawler.ubike_data.slots`
             WHERE DATE(infoTime) BETWEEN 
                 DATE_SUB(CURRENT_DATE(), INTERVAL 8 DAY) 
                 AND 
