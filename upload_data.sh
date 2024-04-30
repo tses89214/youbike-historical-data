@@ -8,6 +8,6 @@ git checkout -b chore/$branch_name
 git add data/*
 
 git commit -m "chore: auto add data $today"
-git push
+git push --set-upstream origin chore/$branch_name
 
 rm -r data
