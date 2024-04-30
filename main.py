@@ -27,6 +27,7 @@ def main():
 
     if md5_check_result is False:
         bq_connector.overwrite_sites(sites)
+        bq_connector.overwrite_site_md5(current_md5)
 
     # slots always update.
     bq_connector.append_slots(slots)
