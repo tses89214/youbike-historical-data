@@ -51,6 +51,6 @@ def split_table(records: List[Dict]):
     sites = raw_table[['sno', 'sna', 'tot', 'sarea',
                       'lat', 'lng', 'ar', 'sareaen', 'aren', 'act']]
     slots = raw_table[['sno', 'sbi', 'infoTime']]
-    slots['infoTime'] = pd.to_datetime(slots['infoTime'])
+    slots.loc[:, 'infoTime'] = pd.to_datetime(slots['infoTime'])
 
     return sites, slots
