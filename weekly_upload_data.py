@@ -21,6 +21,7 @@ def main():
     connector.read_sites().to_csv('data/sites/sites.csv', index=False)
     today_slots = datetime.datetime.now().strftime('slots/%Y-%m-%d.csv')
     connector.read_slots().to_csv(f'data/{today_slots}', index=False)
+    connector.clean_slots()
 
 
 if __name__ == "__main__":
