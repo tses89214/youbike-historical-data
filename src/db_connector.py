@@ -5,7 +5,7 @@ Currently we only has BigQuery Connector(BQConnector).
 from google.cloud import bigquery
 import pandas as pd
 
-from src.table import sites, slots
+from src.table import sites, slots, site_md5
 
 
 class BQConnector:
@@ -52,6 +52,28 @@ class BQConnector:
         )
         job = self._client.load_table_from_dataframe(
             sites_data, table_id, job_config=job_config
+        )
+        return job.result()
+
+    def overwrite_site_md5(self, site_md5_data: str):
+        """
+        Overwrite site_md5 table.
+
+        Args:
+            site_md5 (str): site_md5.
+
+        Returns:
+            job results.
+        """
+        table_id = 'ubike-crawler.ubike_data.site_md5'
+        job_config = bigquery.LoadJobConfig(
+            schema=site_md5.to_bq_schema(),
+            write_disposition='WRITE_TRUNCATE'
+        )
+        job = self._client.load_table_from_dataframe(
+            pd.DataFrame({'md5': site_md5_data}, index=[0]),
+            table_id,
+            job_config=job_config
         )
         return job.result()
 

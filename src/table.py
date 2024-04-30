@@ -65,6 +65,14 @@ sites = Table(
     }
 )
 
+site_md5 = Table(
+    table_name='site_md5',
+    schema={
+        'md5': 'STRING'
+    }
+)
+
+
 slots = Table(
     table_name='slots',
     schema={
