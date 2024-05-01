@@ -30,6 +30,7 @@ def main():
         connector.read_slots().to_csv(slots_filename, index=False)
         connector.clean_slots()
 
+    # TODO: currently we catch all exception, fix it later.
     # pylint:disable=broad-exception-caught
     except Exception:
         dotenv.load_dotenv(override=True)

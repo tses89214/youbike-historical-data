@@ -37,6 +37,7 @@ def main():
         # slots always update.
         bq_connector.append_slots(slots)
 
+    # TODO: currently we catch all exception, fix it later.
     # pylint:disable=broad-exception-caught
     except Exception:
         dotenv.load_dotenv(override=True)
