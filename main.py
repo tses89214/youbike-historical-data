@@ -9,6 +9,7 @@ import dotenv
 from src.crawler import download_data, split_table
 from src.db_connector import BQConnector
 from src.alarm import TGBot
+from src.logger import logger
 
 
 def main():
@@ -41,6 +42,7 @@ def main():
         dotenv.load_dotenv(override=True)
         bot = TGBot()
         bot.send_message(traceback.format_exc())
+        logger.error("Meet Exception:", exc_info=True)
 
 
 if __name__ == "__main__":
