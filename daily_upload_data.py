@@ -1,5 +1,5 @@
 """
-This script used to export sites and slots data WEEKLY.
+This script used to export sites and slots data daily.
 """
 import datetime
 import os
