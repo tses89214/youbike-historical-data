@@ -19,8 +19,10 @@ def main():
     os.makedirs('data/slots', exist_ok=True)
 
     connector.read_sites().to_csv('data/sites/sites.csv', index=False)
-    today_slots = datetime.datetime.now().strftime('slots/%Y-%m-%d.csv')
-    connector.read_slots().to_csv(f'data/{today_slots}', index=False)
+
+    date = datetime.datetime.now() - datetime.timedelta(days=2)
+    slots_filename = date.strftime('data/slots/%Y-%m-%d.csv')
+    connector.read_slots().to_csv(slots_filename, index=False)
     connector.clean_slots()
 
 

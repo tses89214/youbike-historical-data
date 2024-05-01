@@ -118,7 +118,7 @@ class BQConnector:
         query = """
             SELECT distinct * FROM `ubike-crawler.ubike_data.slots`
             WHERE DATE(infoTime) BETWEEN 
-                DATE_SUB(CURRENT_DATE(), INTERVAL 8 DAY) 
+                DATE_SUB(CURRENT_DATE(), INTERVAL 2 DAY) 
                 AND 
                 DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
         """
@@ -132,7 +132,7 @@ class BQConnector:
         query = """
             DELETE FROM `ubike-crawler.ubike_data.slots`
             WHERE DATE(infoTime) BETWEEN 
-                DATE_SUB(CURRENT_DATE(), INTERVAL 8 DAY) 
+                DATE_SUB(CURRENT_DATE(), INTERVAL 2 DAY) 
                 AND 
                 DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
         """
