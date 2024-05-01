@@ -7,5 +7,3 @@ git add data/*
 
 git commit -m "chore: auto add data $date"
 git push
-
-rm -r data
