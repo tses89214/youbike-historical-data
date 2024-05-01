@@ -1,3 +1,5 @@
+cd /home/tses89214/ubike-historical-data
+
 date=$(date -d "2 days ago" +%Y-%m-%d)
 branch_name=upload-data-$date
 
