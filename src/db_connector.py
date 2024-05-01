@@ -117,10 +117,7 @@ class BQConnector:
         """
         query = """
             SELECT distinct * FROM `ubike-crawler.ubike_data.slots`
-            WHERE DATE(infoTime) BETWEEN 
-                DATE_SUB(CURRENT_DATE(), INTERVAL 2 DAY) 
-                AND 
-                DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
+            WHERE DATE(infoTime) = DATE_SUB(CURRENT_DATE(), INTERVAL 2 DAY) 
         """
         query_job = self._client.query(query)
         return query_job.to_dataframe()
@@ -131,10 +128,7 @@ class BQConnector:
         """
         query = """
             DELETE FROM `ubike-crawler.ubike_data.slots`
-            WHERE DATE(infoTime) BETWEEN 
-                DATE_SUB(CURRENT_DATE(), INTERVAL 2 DAY) 
-                AND 
-                DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
+            WHERE DATE(infoTime) = DATE_SUB(CURRENT_DATE(), INTERVAL 2 DAY) 
         """
         delete_job = self._client.query(query)
         delete_job.result()
