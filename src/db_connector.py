@@ -139,3 +139,23 @@ class BQConnector:
         """
         delete_job = self._client.query(query)
         delete_job.result()
+
+    def get_new_data_flag(self):
+        """
+        Get new data flag from site_md5 table.
+        """
+        query = 'SELECT new_data_flag FROM `ubike-crawler.ubike_data.site_md5` LIMIT 1 '
+        query_job = self._client.query(query)
+        rows = query_job.result()
+        for row in rows:
+            new_data_flag = row['new_data_flag']
+        return new_data_flag
+
+    def set_new_data_flag(self, flag: bool):
+        """
+        Set new data flag of site_md5 table.
+        """
+        query = f"""UPDATE `ubike-crawler.ubike_data.site_md5` 
+                    SET new_data_flag = {flag} WHERE 1=1"""
+        update_job = self._client.query(query)
+        update_job.result()

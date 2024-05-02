@@ -23,13 +23,15 @@ def main():
         os.makedirs('data/sites', exist_ok=True)
         os.makedirs('data/slots', exist_ok=True)
 
-        connector.read_sites().to_csv('data/sites/sites.csv', index=False)
-
         target_date = datetime.datetime.now() - datetime.timedelta(days=1)
-        slots_filename = target_date.strftime('data/slots/%Y-%m-%d.csv')
-        connector.read_slots(
-            date=target_date.strftime('%Y-%m-%d')
-        ).to_csv(slots_filename, index=False)
+
+        if connector.get_new_data_flag():
+            connector.read_sites() \
+                .to_csv(f'data/sites/{target_date.strftime("%Y-%m-%d")}.csv', index=False)
+            connector.set_new_data_flag(flag=False)
+
+        connector.read_slots(date=target_date.strftime('%Y-%m-%d')) \
+            .to_csv(f'data/slots/{target_date.strftime("%Y-%m-%d")}.csv', index=False)
         connector.clean_slots(date=target_date.strftime('%Y-%m-%d'))
 
     # TODO: currently we catch all exception, fix it later.
