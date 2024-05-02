@@ -5,7 +5,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 import os
 
-LOG_FORMAT = "%(asctime)s - %(levelname)s - %(filename)s:%(lineno)d - %(message)s"
+LOG_FORMAT = "%(asctime)s - %(levelname)s - %(filename)s - %(message)s"
 LOG_DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 LOG_DIR = "./logs/"
 MAX_LOG_SIZE_BYTES = 1048576  # 1 MB
