@@ -6,6 +6,7 @@ from google.cloud import bigquery
 import pandas as pd
 
 from src.table import sites, slots, site_md5
+from src.logger import logger
 
 
 class BQConnector:
@@ -16,6 +17,7 @@ class BQConnector:
 
     def __init__(self, client: bigquery.Client = None) -> None:
         self._client = bigquery.Client() if client is None else client
+        logger.info("Initializing database connector.")
 
     def check_md5_for_update(self, site_data_md5: str) -> bool:
         """
@@ -33,6 +35,9 @@ class BQConnector:
         for row in rows:
             current_md5 = row['md5']
 
+        logger.info(
+            "Get md5 from db: %s, md5 from new data: %s",
+            current_md5, site_data_md5)
         return current_md5 == site_data_md5
 
     def overwrite_sites(self, sites_data: pd.DataFrame):
@@ -53,6 +58,7 @@ class BQConnector:
         job = self._client.load_table_from_dataframe(
             sites_data, table_id, job_config=job_config
         )
+        logger.info("Overwrite Sites table.")
         return job.result()
 
     def overwrite_site_md5(self, site_md5_data: str):
@@ -75,6 +81,7 @@ class BQConnector:
             table_id,
             job_config=job_config
         )
+        logger.info("Overwrite Sites md5 table.")
         return job.result()
 
     def append_slots(self, slots_data: pd.DataFrame):
@@ -95,6 +102,7 @@ class BQConnector:
         job = self._client.load_table_from_dataframe(
             slots_data, table_id, job_config=job_config
         )
+        logger.info("Append data into Slots table.")
         return job.result()
 
     def read_sites(self) -> pd.DataFrame:
@@ -106,6 +114,7 @@ class BQConnector:
         """
         query = 'SELECT * FROM `ubike-crawler.ubike_data.sites`'
         query_job = self._client.query(query)
+        logger.info("Read the whole sites table.")
         return query_job.to_dataframe()
 
     def read_slots(self, date: str) -> pd.DataFrame:
@@ -123,11 +132,12 @@ class BQConnector:
             WHERE DATE(infoTime) = '{date}'
         """
         query_job = self._client.query(query)
+        logger.info("Read the slots table, range: %s", date)
         return query_job.to_dataframe()
 
     def clean_slots(self, date: str):
         """
-        Clean last week data from slots table.
+        Clean past data from slots table.
 
         Args:
             date: str. The date want to export.
@@ -138,7 +148,8 @@ class BQConnector:
             WHERE DATE(infoTime) = '{date}'
         """
         delete_job = self._client.query(query)
-        delete_job.result()
+        logger.info("Clean past data from slots table, range: %s", date)
+        return delete_job.result()
 
     def get_new_data_flag(self):
         """
@@ -149,6 +160,8 @@ class BQConnector:
         rows = query_job.result()
         for row in rows:
             new_data_flag = row['new_data_flag']
+
+        logger.info("Get new data flag: %s", str(new_data_flag))
         return new_data_flag
 
     def set_new_data_flag(self, flag: bool):
@@ -159,3 +172,4 @@ class BQConnector:
                     SET new_data_flag = {flag} WHERE 1=1"""
         update_job = self._client.query(query)
         update_job.result()
+        logger.info("Set new data flag: %s", str(flag))

@@ -17,6 +17,7 @@ def main():
     Main entrypoint.
     """
     try:
+        logger.info("Starting download execution.")
         dotenv.load_dotenv(override=True)
 
         bq_connector = BQConnector()
@@ -34,9 +35,11 @@ def main():
             bq_connector.overwrite_sites(sites)
             bq_connector.overwrite_site_md5(current_md5)
             bq_connector.set_new_data_flag(True)
+            logger.info("Upload sites table.")
 
         # slots always update.
         bq_connector.append_slots(slots)
+        logger.info("Upload slots table.")
 
     # TODO: currently we catch all exception, fix it later.
     # pylint:disable=broad-exception-caught

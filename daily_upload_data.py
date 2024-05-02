@@ -24,11 +24,14 @@ def main():
         os.makedirs('data/slots', exist_ok=True)
 
         target_date = datetime.datetime.now() - datetime.timedelta(days=1)
+        logger.info("Daily upload data, range: %s",
+                    target_date.strftime("%Y-%m-%d"))
 
         if connector.get_new_data_flag():
             connector.read_sites() \
                 .to_csv(f'data/sites/{target_date.strftime("%Y-%m-%d")}.csv', index=False)
             connector.set_new_data_flag(flag=False)
+            logger.info("Upload new sites table.")
 
         connector.read_slots(date=target_date.strftime('%Y-%m-%d')) \
             .to_csv(f'data/slots/{target_date.strftime("%Y-%m-%d")}.csv', index=False)

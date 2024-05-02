@@ -6,6 +6,8 @@ from typing import List, Dict
 import requests
 import pandas as pd
 
+from src.logger import logger
+
 
 def download_data():
     """
@@ -16,6 +18,8 @@ def download_data():
     """
     url = 'https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbike_immediate.json'
     data = requests.get(url, timeout=60).json()
+
+    logger.info("Get data from API, len = %s", str(len(data)))
     return data
 
 
@@ -53,4 +57,5 @@ def split_table(records: List[Dict]):
     slots = raw_table[['sno', 'sbi', 'infoTime']]
     slots.loc[:, 'infoTime'] = pd.to_datetime(slots['infoTime'])
 
+    logger.info("Split Table into Site and Slots two tables.")
     return sites, slots
