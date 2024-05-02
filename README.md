@@ -30,11 +30,14 @@
 | sbi      | INT   |  站點目前車輛數量        |
 | infoTime      | DATETIME      | 資料更新時間         
 
+## Update Time
+每天凌晨一點會上傳前一天的數據。
+例如 05/02 會上傳 infoTime = 05/01 的數據。
 
 ## Note
 - 沒有保留車輛"空位資訊"，請自行將總停車格數(sites.tot) 減去目前車輛數 (slots.sbi)。
 - 蒐集過程中發現不是所有站點都會上傳數據，有些站點最新的更新數據是過去好幾個月的。如果找不到站點的歷史數據，有可能是沒在傳數據的站點。可以自行呼叫 [API](https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbike_immediate.json) 確認一下。
-
+- 其實 API 裡面有提供好幾個時間，分別是站點上傳數據的時間、Youbike DB 接收到數據的時間等。個人認為站點上傳的時間比較有參考價值，因此以 infoTime (站點上傳時間) 為主。
 
 ## Reference
 - 數據來源: https://data.gov.tw/dataset/137993
