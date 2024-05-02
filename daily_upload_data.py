@@ -14,7 +14,7 @@ from src.logger import logger
 
 def main():
     """
-    export sites and slots data to csv weekly.
+    export sites and slots data to csv daily.
     """
     try:
         dotenv.load_dotenv(override=True)
