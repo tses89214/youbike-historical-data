@@ -25,12 +25,12 @@ def main():
 
         connector.read_sites().to_csv('data/sites/sites.csv', index=False)
 
-        date = datetime.datetime.now() - datetime.timedelta(days=2)
-        slots_filename = date.strftime('data/slots/%Y-%m-%d.csv')
+        target_date = datetime.datetime.now() - datetime.timedelta(days=1)
+        slots_filename = target_date.strftime('data/slots/%Y-%m-%d.csv')
         connector.read_slots(
-            date=date.strftime('%Y-%m-%d')
+            date=target_date.strftime('%Y-%m-%d')
         ).to_csv(slots_filename, index=False)
-        connector.clean_slots(date=date.strftime('%Y-%m-%d'))
+        connector.clean_slots(date=target_date.strftime('%Y-%m-%d'))
 
     # TODO: currently we catch all exception, fix it later.
     # pylint:disable=broad-exception-caught
