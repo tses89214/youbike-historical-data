@@ -108,27 +108,34 @@ class BQConnector:
         query_job = self._client.query(query)
         return query_job.to_dataframe()
 
-    def read_slots(self) -> pd.DataFrame:
+    def read_slots(self, date: str) -> pd.DataFrame:
         """
         Read the slots table of specific time range.
+
+        Args:
+            date: str. The date want to export.
 
         Returns:
             bool: whether md5 is same.
         """
-        query = """
+        query = f"""
             SELECT distinct * FROM `ubike-crawler.ubike_data.slots`
-            WHERE DATE(infoTime) = DATE_SUB(CURRENT_DATE(), INTERVAL 2 DAY) 
+            WHERE DATE(infoTime) = '{date}'
         """
         query_job = self._client.query(query)
         return query_job.to_dataframe()
 
-    def clean_slots(self):
+    def clean_slots(self, date: str):
         """
         Clean last week data from slots table.
+
+        Args:
+            date: str. The date want to export.
+
         """
-        query = """
+        query = f"""
             DELETE FROM `ubike-crawler.ubike_data.slots`
-            WHERE DATE(infoTime) = DATE_SUB(CURRENT_DATE(), INTERVAL 2 DAY) 
+            WHERE DATE(infoTime) = '{date}'
         """
         delete_job = self._client.query(query)
         delete_job.result()

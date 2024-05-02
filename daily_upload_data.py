@@ -27,8 +27,10 @@ def main():
 
         date = datetime.datetime.now() - datetime.timedelta(days=2)
         slots_filename = date.strftime('data/slots/%Y-%m-%d.csv')
-        connector.read_slots().to_csv(slots_filename, index=False)
-        connector.clean_slots()
+        connector.read_slots(
+            date=date.strftime('%Y-%m-%d')
+        ).to_csv(slots_filename, index=False)
+        connector.clean_slots(date=date.strftime('%Y-%m-%d'))
 
     # TODO: currently we catch all exception, fix it later.
     # pylint:disable=broad-exception-caught
