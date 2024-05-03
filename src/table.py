@@ -76,7 +76,7 @@ slots = Table(
     table_name='slots',
     schema={
         'sno': 'STRING',
-        'tot': 'INT',
+        'total': 'INT',
         'available_rent_bikes': 'INT',
         'available_return_bikes': 'INT',
         'infoTime': 'DATETIME'
