@@ -35,10 +35,9 @@ def split_table(records: List[Dict]):
             Sites table fields:
                 - sno
                 - sna
-                - tot
                 - sarea
-                - lat
-                - lng
+                - latitude
+                - longitude
                 - ar
                 - sareaen
                 - snaen
@@ -47,24 +46,21 @@ def split_table(records: List[Dict]):
 
             Slots table fields:
                 - sno
-                - sbi
+                - total
+                - available_rent_bikes
+                - available_return_bikes
                 - infoTime
 
     """
     raw_table = pd.DataFrame(records)
 
-    # At 2024/05/03, schema seems changed without notification.
-    rename_columns = {
-        "total": "tot",
-        "latitude": "lat",
-        "longitude": "lng",
-        "available_rent_bikes": "sbi"
-    }
-    raw_table = raw_table.rename(rename_columns, axis=1, errors='ignore')
+    # At 2024/05/03 17:00, schema seems changed without notification. (#`Д´)ﾉ
+    sites = raw_table[['sno', 'sna', 'sarea',
+                      'latitude', 'longitude', 'ar', 'sareaen', 'aren', 'act']]
 
-    sites = raw_table[['sno', 'sna', 'tot', 'sarea',
-                      'lat', 'lng', 'ar', 'sareaen', 'aren', 'act']]
-    slots = raw_table[['sno', 'sbi', 'infoTime']]
+    slots = raw_table[['sno', 'total', 'available_rent_bikes',
+                       'available_return_bikes', 'infoTime']]
+
     slots.loc[:, 'infoTime'] = pd.to_datetime(slots['infoTime'])
 
     logger.info("Split Table into Site and Slots two tables.")

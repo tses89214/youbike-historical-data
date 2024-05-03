@@ -17,10 +17,9 @@
 |----------|----------|----------|
 | sno      | STRING   | 站點編號         |
 | sna      | STRING   |  站點中文名稱        |
-| tot      | INT      | 總停車格數         |
 | sarea    | STRING   |  站點所在行政區        |
-| lat      | DOUBLE   | 站點緯度         |
-| lng      | DOUBLE   | 站點經度         |
+| latitude      | DOUBLE   | 站點緯度         |
+| longitude      | DOUBLE   | 站點經度         |
 | ar       | STRING   |  站點地址        |
 | sareaen  | STRING   |  站點行政區(英文)        |
 | aren     | STRING   | 站點地址(英文)         |
@@ -33,7 +32,9 @@
 | 欄位名稱 | 資料型態 | 描述     |
 |----------|----------|----------|
 | sno      | STRING   | 站點編號         |
-| sbi      | INT   |  站點目前車輛數量        |
+| total      | INT      | 總停車格數         |
+| available_rent_bikes      | INT   |  可借車輛數量        |
+| available_return_bikes      | INT   |  可還車輛數量(空位)        |
 | infoTime      | DATETIME      | 資料更新時間         
 
 
@@ -44,3 +45,5 @@
 
 ## Reference
 - 數據來源: https://data.gov.tw/dataset/137993
+
+## murmur

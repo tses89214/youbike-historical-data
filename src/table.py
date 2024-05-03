@@ -54,10 +54,9 @@ sites = Table(
     schema={
         'sno': 'STRING',
         'sna': 'STRING',
-        'tot': 'INT',
         'sarea': 'STRING',
-        'lat': 'DOUBLE',
-        'lng': 'DOUBLE',
+        'latitude': 'DOUBLE',
+        'longitude': 'DOUBLE',
         'ar': 'STRING',
         'sareaen': 'STRING',
         'aren': 'STRING',
@@ -77,7 +76,9 @@ slots = Table(
     table_name='slots',
     schema={
         'sno': 'STRING',
-        'sbi': 'INT',
+        'tot': 'INT',
+        'available_rent_bikes': 'INT',
+        'available_return_bikes': 'INT',
         'infoTime': 'DATETIME'
     }
 )
