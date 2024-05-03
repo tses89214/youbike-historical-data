@@ -52,6 +52,16 @@ def split_table(records: List[Dict]):
 
     """
     raw_table = pd.DataFrame(records)
+
+    # At 2024/05/03, schema seems changed without notification.
+    rename_columns = {
+        "total": "tot",
+        "latitude": "lat",
+        "longitude": "lng",
+        "sbi": "available_rent_bikes",
+    }
+    raw_table = raw_table.rename(rename_columns, errors='ignore')
+
     sites = raw_table[['sno', 'sna', 'tot', 'sarea',
                       'lat', 'lng', 'ar', 'sareaen', 'aren', 'act']]
     slots = raw_table[['sno', 'sbi', 'infoTime']]
