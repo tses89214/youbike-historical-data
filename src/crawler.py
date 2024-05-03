@@ -58,9 +58,9 @@ def split_table(records: List[Dict]):
         "total": "tot",
         "latitude": "lat",
         "longitude": "lng",
-        "sbi": "available_rent_bikes",
+        "available_rent_bikes": "sbi"
     }
-    raw_table = raw_table.rename(rename_columns, errors='ignore')
+    raw_table = raw_table.rename(rename_columns, axis=1, errors='ignore')
 
     sites = raw_table[['sno', 'sna', 'tot', 'sarea',
                       'lat', 'lng', 'ar', 'sareaen', 'aren', 'act']]
